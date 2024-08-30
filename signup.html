@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: bisque;
+            background-image: url("pic3.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Keyframe animation for right-to-left transition */
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        #signup-container {
+            display: flex;
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            border: 1px solid rgb(22, 214, 198);
+            box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+            overflow: hidden;
+            /* Apply animation on load */
+            animation: slideIn 1s ease-out;
+        }
+
+        #signup {
+            width: 50%;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            transition: all 0.5s ease;
+        }
+
+        #signup:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 0, 255, 0.7);
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            display: block;
+            text-align: left;
+            width: 100%;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"] {
+            border-radius: 10px;
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 15px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="text"]:hover,
+        input[type="email"]:hover,
+        input[type="password"]:hover,
+        input[type="file"]:hover {
+            background-color: #f0f0f0;
+        }
+
+        button {
+            color: white;
+            background-color: #2e07b9;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #458be6;
+            transform: scale(1.1);
+        }
+
+        h2 {
+            text-align: left;
+            width: 100%;
+            margin-bottom: 30px;
+            color: #2e07b9;
+            font-size: 24px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a {
+            color: #0a07b1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #2e07b9;
+        }
+
+        #right-panel {
+            width: 50%;
+            background-color: #2e07b9;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        #right-panel p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="signup-container">
+        <form id="signup" enctype="multipart/form-data">
+            <h2><i class="fas fa-user-plus"></i> Sign Up</h2>
+
+            <label for="firstname"><i class="fas fa-user"></i> First Name:</label>
+            <input type="text" id="firstname" placeholder="First Name" required>
+
+            <label for="lastname"><i class="fas fa-user"></i> Last Name:</label>
+            <input type="text" id="lastname" placeholder="Last Name" required>
+
+            <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+            <input type="email" id="email" placeholder="Email" required>
+
+            <label for="password"><i class="fas fa-lock"></i> Password:</label>
+            <input type="password" id="password" placeholder="Password" required>
+
+            <label for="confirmpassword"><i class="fas fa-lock"></i> Confirm Password:</label>
+            <input type="password" id="confirmpassword" placeholder="Confirm Password" required>
+
+            <label for="profilepicture"><i class="fas fa-image"></i> Profile Picture:</label>
+            <input type="file" id="profilepicture" name="profilepicture" required>
+
+            <button type="submit"><i class="fas fa-sign-in-alt"></i> Sign Up</button>
+
+            <p>Already have an account? <a href="Login.html"><i class="fas fa-sign-in-alt"></i> Login here</a></p>
+        </form>
+
+        <div id="right-panel">
+            <p>Welcome to our platform! By signing up, you gain access to exclusive content, features, and much more. Join us today and start your journey!</p>
+        </div>
+    </div>
+
+    <script>
+        // Redirect to exam page if the user is already logged in
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            window.location.href = 'exam.html';
+        }
+
+        // Form submission handling
+        document.querySelector('#signup').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const password1 = document.querySelector('#password').value;
+            const password2 = document.querySelector('#confirmpassword').value;
+
+            if (password1 === password2) {
+                const firstname = document.querySelector('#firstname').value;
+                const lastname = document.querySelector('#lastname').value;
+                const username = firstname + " " + lastname;
+                const email = document.querySelector('#email').value;
+                const picture = document.querySelector('#profilepicture').files[0];
+
+                // Validate input fields
+                if (username && password1 && email && picture) {
+                    const reader = new FileReader();
+                    reader.onloadend = function() {
+                        const profilePicBase64 = reader.result;
+
+                        // Save user data in localStorage
+                        localStorage.setItem('username', username);
+                        localStorage.setItem('password', password1);
+                        localStorage.setItem('email', email);
+                        localStorage.setItem('picture', profilePicBase64);
+
+                        alert('Sign up successful! You can now log in.');
+                        window.location.href = 'login.html';  // Redirect to login page
+                    };
+
+                    reader.readAsDataURL(picture); // Convert the image to Base64 and trigger onloadend
+
+                } else {
+                    alert('Please fill out all fields and select a profile picture.');
+                }
+            } else {
+                alert('The two passwords do not match!');
+            }
+        });
+    </script>
+</body>
+</html>
