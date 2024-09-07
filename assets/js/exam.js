@@ -126,7 +126,7 @@
             return response.json();
           })
           .then((data) => {
-            questions = data.sort(() => 0.5 - Math.random()).slice(0, 30);
+            questions = data.sort(() => 0.5 - Math.random()).slice(0, 10);
             let correctAnswers = questions.reduce((acc, question, index) => {
               acc[index] = question.answer;
               return acc;
@@ -184,10 +184,10 @@
               document.getElementById("back").disabled = index === 0;
               document.getElementById("next").disabled =
                 index === questions.length - 1 && allQuestionsAnswered();
-              document.getElementById("submit").style.display =
-                index === questions.length - 1 && allQuestionsAnswered()
-                  ? "inline-block"
-                  : "none";
+                document.getElementById("submit").style.display = 
+                currentQuestionIndex === questions.length - 1 && allQuestionsAnswered() 
+                   ? "inline-block" 
+                   : "none";
             }
 
             function allQuestionsAnswered() {
@@ -266,22 +266,36 @@
             function showResult() {
               // Calculate the score
               let score = 0;
+              let resultDetails = [];
+            
               questions.forEach((question, index) => {
-                if (selectedAnswers[index] === question.answer) {
-                  score++;
-                }
+                const isCorrect = selectedAnswers[index] === question.answer;
+                if (isCorrect) score++;
+            
+                resultDetails.push({
+                  question: question.question,
+                  submittedAnswer: selectedAnswers[index] || "No answer",
+                  correctAnswer: question.answer,
+                  isCorrect,
+                });
               });
-
+            
               // Prepare the dark humor message
-              const difficulty = "high";
+              const difficulties = ["high", "medium", "low"];
+              const difficulty = difficulties[Math.floor(Math.random() * difficulties.length)];
               const darkHumorMessage = getDarkHumorMessage(difficulty);
-
-              // Redirect to scorepage.html with query parameters
+            
+              // Store the result details in localStorage
+              console.log(resultDetails);
+              localStorage.setItem("resultDetails", JSON.stringify(resultDetails));
+                          
+              // Redirect to scorepage.html with score and dark humor message
               const scorePageUrl = `scorepage.html?score=${score}&message=${encodeURIComponent(
                 darkHumorMessage
               )}`;
               window.location.href = scorePageUrl;
             }
+            
 
             function calculateScore() {
               let score = 0;
