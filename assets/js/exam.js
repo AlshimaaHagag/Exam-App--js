@@ -10,7 +10,7 @@
       document.addEventListener("DOMContentLoaded", function () {
         // Check if user is logged in, if not redirect to login page
         if (localStorage.getItem("isLoggedIn") !== "true") {
-          window.location.href = "login.html";
+          window.location.href = "index.html";
         }
 
         // Update username and profile picture from localStorage
@@ -33,7 +33,7 @@
               // localStorage.removeItem('password');
               // localStorage.removeItem('email');
               alert("You have logged out. Back to the cold, harsh reality.");
-              window.location.href = "login.html";
+              window.location.href = "index.html";
             }
           });
 

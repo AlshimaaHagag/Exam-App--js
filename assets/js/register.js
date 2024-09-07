@@ -30,7 +30,7 @@
                     localStorage.setItem('picture', profilePicBase64);
 
                     alert('Sign up successful! You can now log in.');
-                    window.location.href = 'login.html';  // Redirect to login page
+                    window.location.href = 'index.html';  // Redirect to login page
                 };
 
                 reader.readAsDataURL(picture); // Convert the image to Base64 and trigger onloadend
